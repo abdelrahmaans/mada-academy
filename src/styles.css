@@ -451,6 +451,7 @@ details[open] .faq-answer {
 
 .mada-timeline {
   position: relative;
+  --timeline-progress: 1;
 }
 
 .mada-timeline::before {
@@ -460,6 +461,8 @@ details[open] .faq-answer {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--mada-teal), var(--mada-amber), transparent);
   content: '';
+  transform: scaleX(var(--timeline-progress));
+  transform-origin: right center;
 }
 
 .mada-timeline-step {
@@ -558,6 +561,8 @@ details[open] .faq-answer {
     width: 2px;
     height: 100%;
     background: linear-gradient(180deg, transparent, var(--mada-teal), var(--mada-amber), transparent);
+    transform: scaleY(var(--timeline-progress));
+    transform-origin: top center;
   }
 
   .mada-card-interactive:hover,

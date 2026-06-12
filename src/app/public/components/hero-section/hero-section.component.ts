@@ -2,9 +2,9 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, NgZone, 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LeadModalConfig } from '../../../core/models/lead.models';
-import { AchievementBadgeComponent } from '../visual-system/achievement-badge.component';
+import { AchievementBadgeVisualComponent } from '../visual-system/achievement-badge-visual.component';
 import { AnimatedMetricCardComponent } from '../visual-system/animated-metric-card.component';
-import { CodeWindowCardComponent } from '../visual-system/code-window-card.component';
+import { CodeWindowVisualComponent } from '../visual-system/code-window-visual.component';
 import { FloatingCodeSymbolsComponent } from '../visual-system/floating-code-symbols.component';
 import { MadaGridBackgroundComponent } from '../visual-system/mada-grid-background.component';
 import { OrbitalBadgesComponent } from '../visual-system/orbital-badges.component';
@@ -15,9 +15,9 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-hero-section',
   imports: [
-    AchievementBadgeComponent,
+    AchievementBadgeVisualComponent,
     AnimatedMetricCardComponent,
-    CodeWindowCardComponent,
+    CodeWindowVisualComponent,
     FloatingCodeSymbolsComponent,
     MadaGridBackgroundComponent,
     OrbitalBadgesComponent,
@@ -54,7 +54,8 @@ gsap.registerPlugin(ScrollTrigger);
           </div>
 
           <div class="hero-panel absolute inset-x-0 top-14 mx-auto w-[min(92%,430px)]">
-            <app-code-window-card
+            <!-- Replace hero abstract/screenshots in src/assets/visuals/hero or CMS when final brand artwork is ready. -->
+            <app-code-window-visual
               title="mada-path.ts"
               code='const path = mada
   .discover(child)
@@ -67,11 +68,11 @@ xp.add(120);'
           </div>
 
           <div class="hero-badge-card absolute start-0 top-6 hidden sm:block">
-            <app-achievement-badge icon="XP" title="Session Sprint" [xp]="120" />
+            <app-achievement-badge-visual icon="XP" title="Session Sprint" [xp]="120" />
           </div>
 
           <div class="hero-badge-card absolute end-0 top-[58%]">
-            <app-achievement-badge icon="★" title="Logic Builder" [xp]="420" />
+            <app-achievement-badge-visual icon="★" title="Logic Builder" [xp]="420" />
           </div>
 
           <div class="hero-badge-card absolute bottom-4 start-[10%] rounded-lg border border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] p-4 shadow-xl backdrop-blur">

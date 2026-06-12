@@ -1,7 +1,7 @@
-import { NgOptimizedImage } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Testimonial } from '../../../core/models/content.models';
 import { RevealOnScrollDirective } from '../../directives/reveal-on-scroll.directive';
+import { ParentMessageCardComponent } from '../visual-system/parent-message-card.component';
 
 interface SwiperContainerElement extends HTMLElement {
   swiper?: {
@@ -14,20 +14,20 @@ interface SwiperContainerElement extends HTMLElement {
 
 @Component({
   selector: 'app-testimonials-section',
-  imports: [NgOptimizedImage, RevealOnScrollDirective],
+  imports: [RevealOnScrollDirective, ParentMessageCardComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <section class="mada-section">
       <div class="mada-shell">
         <div appRevealOnScroll>
-          <p class="mada-eyebrow">Testimonials</p>
-          <h2 class="mt-4 text-4xl font-black">آراء أولياء الأمور والطلاب</h2>
+          <p class="mada-eyebrow">Parent Messages</p>
+          <h2 class="mt-4 text-4xl font-black">رسائل ثقة من أولياء الأمور</h2>
         </div>
 
         @if (testimonials().length) {
           <swiper-container
             class="mada-swiper mt-8"
-            autoplay='{"delay":5000,"disableOnInteraction":false,"pauseOnMouseEnter":true}'
+            autoplay='{"delay":5200,"disableOnInteraction":false,"pauseOnMouseEnter":true}'
             loop="true"
             pagination="true"
             slides-per-view="1"
@@ -38,23 +38,7 @@ interface SwiperContainerElement extends HTMLElement {
           >
             @for (testimonial of testimonials(); track testimonial.id) {
               <swiper-slide>
-                <article class="mada-card mada-card-interactive h-full p-6">
-                  <div class="flex items-center gap-3">
-                    <div class="relative grid size-12 place-items-center overflow-hidden rounded-lg bg-[var(--mada-mint)] font-black text-teal-900">
-                      @if (testimonial.image_url) {
-                        <img [ngSrc]="testimonial.image_url" [alt]="'صورة ' + testimonial.author_name" fill sizes="48px" class="object-cover" />
-                      } @else {
-                        {{ testimonial.author_name.slice(0, 1) }}
-                      }
-                    </div>
-                    <div>
-                      <p class="font-black">{{ testimonial.author_name }}</p>
-                      <p class="text-sm text-[var(--muted)]">{{ testimonial.role }}</p>
-                    </div>
-                  </div>
-                  <div class="mt-5 text-amber-500" [attr.aria-label]="'تقييم ' + testimonial.rating + ' من 5'">★★★★★</div>
-                  <blockquote class="mt-4 text-xl font-bold leading-9">"{{ testimonial.quote }}"</blockquote>
-                </article>
+                <app-parent-message-card [testimonial]="testimonial" />
               </swiper-slide>
             }
           </swiper-container>

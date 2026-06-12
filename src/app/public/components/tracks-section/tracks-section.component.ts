@@ -3,10 +3,11 @@ import { LeadModalConfig } from '../../../core/models/lead.models';
 import { Track } from '../../../core/models/track.models';
 import { RevealOnScrollDirective } from '../../directives/reveal-on-scroll.directive';
 import { SectionBlobComponent } from '../visual-system/section-blob.component';
+import { TrackIconVisualComponent } from '../visual-system/track-icon-visual.component';
 
 @Component({
   selector: 'app-tracks-section',
-  imports: [RevealOnScrollDirective, SectionBlobComponent],
+  imports: [RevealOnScrollDirective, SectionBlobComponent, TrackIconVisualComponent],
   template: `
     <section id="tracks" class="mada-section relative overflow-hidden bg-[color-mix(in_srgb,var(--mada-mint)_28%,transparent)]">
       <app-section-blob tone="amber" />
@@ -20,7 +21,7 @@ import { SectionBlobComponent } from '../visual-system/section-blob.component';
           @for (track of tracks(); track track.slug) {
             <article class="mada-card mada-card-interactive flex min-h-[390px] flex-col p-5" [style.--track-color]="trackVisual(track.slug).color">
               <div class="flex items-start justify-between gap-3">
-                <span class="mada-track-visual">{{ trackVisual(track.slug).icon }}</span>
+                <app-track-icon-visual [slug]="track.slug" [alt]="track.title + ' visual'" />
                 <span class="w-max rounded-full bg-[var(--mada-navy)] px-3 py-1 text-sm font-black text-white">{{ track.age }} سنة</span>
               </div>
               <h3 class="mt-4 text-2xl font-black">{{ track.title }}</h3>
@@ -45,27 +46,27 @@ export class TracksSectionComponent {
   readonly tracks = input.required<Track[]>();
   readonly openLead = output<LeadModalConfig>();
 
-  trackVisual(slug: string): { icon: string; color: string } {
+  trackVisual(slug: string): { color: string } {
     if (slug.includes('tiny')) {
-      return { icon: '{}', color: '#0d9488' };
+      return { color: '#0d9488' };
     }
 
     if (slug.includes('explore')) {
-      return { icon: '✦', color: '#0d9488' };
+      return { color: '#0d9488' };
     }
 
     if (slug.includes('build')) {
-      return { icon: 'py', color: '#0f172a' };
+      return { color: '#0f172a' };
     }
 
     if (slug.includes('code')) {
-      return { icon: 'API', color: '#111827' };
+      return { color: '#111827' };
     }
 
     if (slug.includes('web')) {
-      return { icon: '</>', color: '#f59e0b' };
+      return { color: '#f59e0b' };
     }
 
-    return { icon: 'XP', color: '#0d9488' };
+    return { color: '#0d9488' };
   }
 }
