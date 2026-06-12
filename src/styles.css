@@ -1,3 +1,593 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+:root {
+  color-scheme: light;
+  --mada-teal: #0d9488;
+  --mada-navy: #0f172a;
+  --mada-amber: #f59e0b;
+  --mada-mint: #ccfbf1;
+  --mada-slate: #64748b;
+  --page: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --line: #dbe4ee;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --page: #07111f;
+  --surface: #0f172a;
+  --text: #f8fafc;
+  --muted: #d1d9e6;
+  --line: #26364c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--mada-mint) 50%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--page), color-mix(in srgb, var(--page) 86%, var(--mada-mint)));
+  color: var(--text);
+  font-family: Cairo, Inter, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--mada-teal) 18%, transparent), transparent 26rem),
+    linear-gradient(180deg, var(--page), #0b1524);
+}
+
+body:has(.modal-open) {
+  overflow: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  min-height: 48px;
+}
+
+button,
+a,
+select,
+input,
+textarea {
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--mada-amber) 80%, white);
+}
+
+.mada-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.mada-section {
+  padding-block: clamp(48px, 7vw, 92px);
+}
+
+.mada-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--mada-teal) 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mada-mint) 48%, transparent);
+  color: #0f766e;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 7px 12px;
+}
+
+.dark .mada-eyebrow {
+  color: #99f6e4;
+  background: color-mix(in srgb, var(--mada-teal) 18%, transparent);
+}
+
+.mada-title {
+  margin: 16px 0 0;
+  color: var(--text);
+  font-size: clamp(2.05rem, 6vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+.mada-lead {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  line-height: 2;
+}
+
+.mada-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow: 0 20px 70px rgb(15 23 42 / 8%);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.mada-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 900;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.mada-btn:hover {
+  transform: translateY(-2px);
+}
+
+.mada-btn-primary {
+  background: var(--mada-teal);
+  color: #ffffff;
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--mada-teal) 28%, transparent);
+}
+
+.mada-btn-secondary {
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.dark .mada-card,
+.dark .mada-btn-secondary {
+  background: color-mix(in srgb, var(--surface) 92%, #020617);
+  box-shadow: 0 22px 70px rgb(0 0 0 / 24%);
+}
+
+.mada-btn-primary:hover {
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--mada-teal) 36%, transparent);
+}
+
+.mada-card-interactive:hover {
+  border-color: color-mix(in srgb, var(--mada-teal) 55%, var(--line));
+  box-shadow: 0 24px 70px rgb(13 148 136 / 16%);
+  transform: translateY(-6px);
+}
+
+.mada-card-interactive {
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.mada-image-zoom img {
+  transition: transform 700ms ease;
+}
+
+.mada-image-zoom:hover img {
+  transform: scale(1.045);
+}
+
+.motion-reveal {
+  will-change: transform, opacity;
+}
+
+.motion-ready {
+  opacity: 1;
+}
+
+.mada-swiper {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  padding-block: 4px 28px;
+}
+
+.mada-swiper swiper-slide {
+  height: auto;
+}
+
+.mada-swiper::part(pagination) {
+  bottom: 0;
+}
+
+.mada-swiper::part(bullet) {
+  background: color-mix(in srgb, var(--mada-teal) 45%, var(--line));
+  opacity: 1;
+}
+
+.mada-swiper::part(bullet-active) {
+  background: var(--mada-teal);
+}
+
+.mada-skeleton {
+  min-height: 280px;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, transparent, rgb(255 255 255 / 55%), transparent),
+    color-mix(in srgb, var(--line) 60%, transparent);
+  background-size: 220% 100%, 100% 100%;
+  animation: mada-skeleton 1.4s ease-in-out infinite;
+}
+
+.mobile-menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: grid-template-rows 220ms ease, opacity 180ms ease, transform 220ms ease;
+}
+
+.mobile-menu-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mada-badge-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.mada-badge-shine::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 28%), transparent 70%);
+  content: '';
+  transform: translateX(110%);
+  animation: mada-shine 4.8s ease-in-out infinite;
+}
+
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 260ms ease;
+}
+
+details[open] .faq-answer {
+  grid-template-rows: 1fr;
+}
+
+.faq-answer > div {
+  overflow: hidden;
+}
+
+@keyframes mada-skeleton {
+  to {
+    background-position: -120% 0, 0 0;
+  }
+}
+
+@keyframes mada-shine {
+  0%,
+  64% {
+    transform: translateX(110%);
+  }
+
+  82%,
+  100% {
+    transform: translateX(-110%);
+  }
+}
+
+.mada-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.mada-visual-layer,
+.mada-grid-background,
+.mada-section-blob {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mada-grid-background {
+  opacity: 0.42;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--mada-teal) 18%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--mada-teal) 18%, transparent) 1px, transparent 1px),
+    radial-gradient(circle, color-mix(in srgb, var(--mada-amber) 34%, transparent) 1px, transparent 1.5px);
+  background-position: center;
+  background-size: 42px 42px, 42px 42px, 24px 24px;
+  mask-image: radial-gradient(circle at 50% 45%, black, transparent 72%);
+}
+
+.mada-section-blob::before,
+.mada-section-blob::after {
+  position: absolute;
+  border-radius: 999px;
+  content: '';
+  filter: blur(22px);
+  opacity: 0.45;
+  transform: translateZ(0);
+}
+
+.mada-section-blob::before {
+  width: min(360px, 48vw);
+  height: min(360px, 48vw);
+  inset-block-start: 8%;
+  inset-inline-end: 5%;
+  background: var(--mada-mint);
+}
+
+.mada-section-blob::after {
+  width: min(260px, 36vw);
+  height: min(260px, 36vw);
+  inset-block-end: 10%;
+  inset-inline-start: 6%;
+  background: color-mix(in srgb, var(--mada-teal) 38%, transparent);
+}
+
+.mada-section-blob-amber::after {
+  background: color-mix(in srgb, var(--mada-amber) 42%, transparent);
+}
+
+.mada-section-blob-navy::before {
+  background: color-mix(in srgb, var(--mada-teal) 26%, transparent);
+}
+
+.mada-floating-symbol {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb, var(--mada-teal) 24%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow: 0 16px 38px rgb(15 23 42 / 9%);
+  color: var(--mada-teal);
+  font-family: Inter, ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 900;
+  padding: 8px 11px;
+  animation: mada-float-soft 6s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+}
+
+.mada-code-window {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 20% 0%, rgb(13 148 136 / 26%), transparent 18rem),
+    #07111f;
+  box-shadow: 0 26px 80px rgb(2 6 23 / 28%);
+  color: white;
+}
+
+.mada-achievement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid color-mix(in srgb, var(--mada-teal) 28%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  box-shadow: 0 18px 48px rgb(13 148 136 / 15%);
+  color: var(--text);
+  padding: 12px 14px;
+  backdrop-filter: blur(12px);
+}
+
+.mada-achievement-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--mada-mint) 70%, white);
+  color: #0f766e;
+  font-weight: 900;
+}
+
+.mada-orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px dashed color-mix(in srgb, var(--mada-teal) 32%, transparent);
+  border-radius: 999px;
+  animation: mada-orbit-spin 34s linear infinite;
+}
+
+.mada-orbit span {
+  position: absolute;
+  display: grid;
+  min-width: 58px;
+  min-height: 34px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 9%);
+  color: #ccfbf1;
+  font-size: 0.75rem;
+  font-weight: 900;
+  backdrop-filter: blur(8px);
+}
+
+.mada-orbit span:nth-child(1) { inset-block-start: -18px; inset-inline-start: 44%; }
+.mada-orbit span:nth-child(2) { inset-block-start: 16%; inset-inline-end: -18px; }
+.mada-orbit span:nth-child(3) { inset-block-end: 16%; inset-inline-end: -18px; }
+.mada-orbit span:nth-child(4) { inset-block-end: -18px; inset-inline-start: 44%; }
+.mada-orbit span:nth-child(5) { inset-block-end: 16%; inset-inline-start: -18px; }
+.mada-orbit span:nth-child(6) { inset-block-start: 16%; inset-inline-start: -18px; }
+.mada-orbit span:nth-child(7) { inset-block-start: 46%; inset-inline-start: 44%; }
+
+.mada-track-visual {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--track-color, var(--mada-teal)) 18%, white);
+  color: var(--track-color, var(--mada-teal));
+  font-family: Inter, ui-monospace, monospace;
+  font-size: 1.35rem;
+  font-weight: 900;
+  transition: transform 240ms ease;
+}
+
+.mada-card-interactive:hover .mada-track-visual {
+  transform: translateY(-3px) rotate(-2deg);
+}
+
+.mada-timeline {
+  position: relative;
+}
+
+.mada-timeline::before {
+  position: absolute;
+  inset-block-start: 28px;
+  inset-inline: 7%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--mada-teal), var(--mada-amber), transparent);
+  content: '';
+}
+
+.mada-timeline-step {
+  position: relative;
+  z-index: 1;
+}
+
+.mada-gallery-overlay {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: 44px 16px 16px;
+  background: linear-gradient(180deg, transparent, rgb(15 23 42 / 78%));
+  color: white;
+}
+
+.mada-play-chip {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 88%);
+  color: var(--mada-teal);
+  box-shadow: 0 18px 44px rgb(15 23 42 / 20%);
+}
+
+.mada-top-star-card {
+  border-color: rgb(245 158 11 / 30%);
+  box-shadow: 0 24px 80px rgb(245 158 11 / 16%);
+}
+
+@keyframes mada-float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(8px, -14px, 0) rotate(2deg);
+  }
+}
+
+@keyframes mada-orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .mada-shell {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .mada-section {
+    padding-block: 44px;
+  }
+
+  .mada-title {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .mada-section h2 {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 1.25;
+  }
+
+  .mada-card {
+    box-shadow: 0 14px 38px rgb(15 23 42 / 7%);
+  }
+
+  .hero-float {
+    display: none;
+  }
+
+  .mada-floating-symbol,
+  .mada-orbit {
+    display: none;
+  }
+
+  .hero-badge-card {
+    max-width: 145px;
+    padding: 12px;
+    transform: scale(0.92);
+    transform-origin: center;
+  }
+
+  .mada-swiper {
+    margin-inline: -2px;
+    padding-inline: 2px;
+  }
+
+  .mada-timeline::before {
+    inset-block: 0;
+    inset-inline-start: 27px;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, var(--mada-teal), var(--mada-amber), transparent);
+  }
+
+  .mada-card-interactive:hover,
+  .mada-btn:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+
+  .mada-orbit,
+  .mada-floating-symbol {
+    animation: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mada-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mada-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
