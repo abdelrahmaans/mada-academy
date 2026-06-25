@@ -161,6 +161,36 @@ textarea:focus-visible {
   color: var(--text);
 }
 
+.mada-logo-mark {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgb(15 23 42 / 8%);
+}
+
+.mada-logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(2.15);
+}
+
+.mada-logo-mark-dark {
+  border-color: rgb(255 255 255 / 10%);
+  background: var(--mada-navy);
+}
+
+.dark .mada-logo-mark {
+  border-color: rgb(255 255 255 / 12%);
+  background: var(--mada-navy);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 22%);
+}
+
 .dark .mada-card,
 .dark .mada-btn-secondary {
   background: color-mix(in srgb, var(--surface) 92%, #020617);

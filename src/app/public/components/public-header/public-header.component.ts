@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideMenu, LucideMoon, LucideRocket, LucideSun, LucideX } from '@lucide/angular';
@@ -6,12 +6,14 @@ import { ContentService } from '../../../core/services/content.service';
 
 @Component({
   selector: 'app-public-header',
-  imports: [RouterLink, LucideMenu, LucideMoon, LucideRocket, LucideSun, LucideX],
+  imports: [NgOptimizedImage, RouterLink, LucideMenu, LucideMoon, LucideRocket, LucideSun, LucideX],
   template: `
     <header class="sticky top-0 z-40 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] backdrop-blur-xl">
       <div class="mada-shell flex min-h-16 items-center justify-between gap-3">
         <a routerLink="/" class="flex min-w-0 items-center gap-3 text-inherit no-underline" aria-label="Mada Academy home" (click)="closeMenu()">
-          <span class="grid size-11 shrink-0 place-items-center rounded-lg bg-[var(--mada-navy)] font-black text-white">مدى</span>
+          <span class="mada-logo-mark shrink-0" aria-hidden="true">
+            <img [ngSrc]="logoMarkSrc()" alt="" width="96" height="96" priority />
+          </span>
           <span class="min-w-0">
             <strong class="block truncate text-lg leading-5">Mada Academy</strong>
             <span class="block truncate text-xs font-bold text-[var(--mada-slate)]">لا حدود للمدى</span>
@@ -70,6 +72,10 @@ export class PublicHeaderComponent {
 
   constructor() {
     void this.content.siteSettings().then((settings) => this.settings.set(settings));
+  }
+
+  logoMarkSrc(): string {
+    return this.isDark() ? 'assets/brand/mada-logo-mark-dark.png' : 'assets/brand/mada-logo-mark-light.png';
   }
 
   primaryCtaLink(): string {

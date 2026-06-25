@@ -1,15 +1,21 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ContentService } from '../../../core/services/content.service';
 
 @Component({
   selector: 'app-public-footer',
-  imports: [RouterLink],
+  imports: [NgOptimizedImage, RouterLink],
   template: `
     <footer class="border-t border-[var(--line)] bg-[var(--mada-navy)] text-white">
       <div class="mada-shell grid gap-8 py-10 md:grid-cols-[1.4fr_1fr_1fr] md:py-12">
         <div>
-          <strong class="text-2xl">Mada Academy</strong>
+          <div class="flex items-center gap-3">
+            <span class="mada-logo-mark mada-logo-mark-dark shrink-0" aria-hidden="true">
+              <img ngSrc="assets/brand/mada-logo-mark-dark.png" alt="" width="96" height="96" />
+            </span>
+            <strong class="text-2xl">Mada Academy</strong>
+          </div>
           <p class="mt-3 max-w-md leading-8 text-slate-300">مش بنعلّم برمجة بس، بنبني طريقة تفكير. أكاديمية عربية للأطفال من 6 إلى 16 سنة.</p>
         </div>
         <nav class="grid content-start gap-3" aria-label="روابط سريعة">
