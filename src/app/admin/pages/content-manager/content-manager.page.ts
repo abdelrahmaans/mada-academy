@@ -35,12 +35,18 @@ type ContentForm = Omit<ContentItem, 'id'> & { id: string };
             </label>
           </div>
           <div class="grid gap-4 md:grid-cols-[1fr_180px]">
-            <label class="grid gap-2 font-black">الرابط الخارجي <input class="rounded-lg border border-slate-300 px-3 py-3" name="external_link" [(ngModel)]="form.external_link" required /></label>
+            <label class="grid gap-2 font-black">رابط الريل أو الفيديو <input class="rounded-lg border border-slate-300 px-3 py-3" name="external_link" [(ngModel)]="form.external_link" required /></label>
             <label class="grid gap-2 font-black">ترتيب العرض <input class="rounded-lg border border-slate-300 px-3 py-3" name="sort_order" [(ngModel)]="form.sort_order" type="number" /></label>
           </div>
           <label class="flex items-center gap-3 font-black"><input type="checkbox" name="is_published" [(ngModel)]="form.is_published" /> منشور</label>
-          <app-media-uploader label="رفع صورة مصغرة" folder="content-thumbnails" (uploaded)="form.thumbnail_url = $event" />
-          @if (form.thumbnail_url) { <p class="text-sm font-bold text-slate-500">{{ form.thumbnail_url }}</p> }
+          <app-media-uploader
+            label="رفع صورة مصغرة"
+            folder="content-thumbnails"
+            [previewUrl]="form.thumbnail_url"
+            [resetToken]="uploadResetToken()"
+            (uploaded)="form.thumbnail_url = $event"
+            (cleared)="form.thumbnail_url = null"
+          />
           <div class="flex flex-wrap gap-3">
             <button class="mada-btn mada-btn-primary" type="submit" [disabled]="saving()">{{ saving() ? 'جاري الحفظ...' : 'حفظ' }}</button>
             <button class="mada-btn mada-btn-secondary" type="button" (click)="cancel()">إلغاء</button>
@@ -87,6 +93,7 @@ export class ContentManagerPage {
   readonly saving = signal(false);
   readonly editing = signal(false);
   readonly error = signal('');
+  readonly uploadResetToken = signal(0);
   readonly platforms: Platform[] = ['instagram', 'tiktok', 'youtube', 'blog'];
   form: ContentForm = this.blank();
 
@@ -108,16 +115,19 @@ export class ContentManagerPage {
 
   startCreate(): void {
     this.form = this.blank();
+    this.resetUploader();
     this.editing.set(true);
   }
 
   edit(item: ContentItem): void {
     this.form = { ...item };
+    this.resetUploader();
     this.editing.set(true);
   }
 
   cancel(): void {
     this.form = this.blank();
+    this.resetUploader();
     this.editing.set(false);
   }
 
@@ -167,6 +177,10 @@ export class ContentManagerPage {
       is_published: true,
       sort_order: 0
     };
+  }
+
+  private resetUploader(): void {
+    this.uploadResetToken.update((value) => value + 1);
   }
 
   private message(error: unknown, fallback: string): string {
