@@ -163,8 +163,8 @@ textarea:focus-visible {
 
 .mada-logo-mark {
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 70px;
+  height: 52px;
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -176,8 +176,8 @@ textarea:focus-visible {
 .mada-logo-mark img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: scale(2.15);
+  object-fit: contain;
+  transform: scale(1.75);
 }
 
 .mada-logo-mark-dark {
@@ -479,6 +479,166 @@ details[open] .faq-answer {
   transform: translateY(-3px) rotate(-2deg);
 }
 
+.mada-track-showcase {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--track-color, var(--mada-teal)) 20%, var(--line));
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--track-color, var(--mada-teal)) 12%, transparent), transparent 22rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 98%, transparent), color-mix(in srgb, var(--track-color, var(--mada-teal)) 5%, var(--surface)));
+  box-shadow: 0 24px 80px rgb(15 23 42 / 10%);
+  padding: clamp(20px, 3.4vw, 34px);
+  transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.mada-track-showcase::before {
+  position: absolute;
+  inset-block-end: -58px;
+  inset-inline: -8%;
+  height: 118px;
+  border-radius: 50% 50% 0 0;
+  background:
+    radial-gradient(circle at 12% 55%, rgb(255 255 255 / 20%) 1px, transparent 2px),
+    color-mix(in srgb, var(--track-color, var(--mada-teal)) 88%, #0f172a);
+  background-size: 16px 16px, auto;
+  content: '';
+  opacity: 0.95;
+}
+
+.mada-track-showcase:hover {
+  border-color: color-mix(in srgb, var(--track-color, var(--mada-teal)) 46%, var(--line));
+  box-shadow: 0 28px 90px color-mix(in srgb, var(--track-color, var(--mada-teal)) 14%, transparent);
+  transform: translateY(-3px);
+}
+
+.mada-track-progress {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-block-end: 24px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 72%, transparent);
+  height: 9px;
+}
+
+.mada-track-progress span {
+  border-radius: inherit;
+  background: var(--track-color, var(--mada-teal));
+}
+
+.mada-track-pill,
+.mada-track-category {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 900;
+}
+
+.mada-track-pill {
+  background: var(--track-color, var(--mada-teal));
+  color: #ffffff;
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--track-color, var(--mada-teal)) 24%, transparent);
+}
+
+.mada-track-category {
+  border: 1px solid color-mix(in srgb, var(--track-color, var(--mada-teal)) 24%, var(--line));
+  background: color-mix(in srgb, var(--track-color, var(--mada-teal)) 10%, var(--surface));
+  color: var(--track-color, var(--mada-teal));
+}
+
+.mada-track-panel {
+  border: 1px solid color-mix(in srgb, var(--track-color, var(--mada-teal)) 14%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 18px 48px rgb(15 23 42 / 7%);
+  min-height: 210px;
+  padding: 20px;
+  text-align: center;
+}
+
+.mada-track-panel h4 {
+  margin: 0 0 16px;
+  color: var(--track-color, var(--mada-teal));
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.mada-track-panel p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.9;
+}
+
+.mada-track-panel ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: start;
+}
+
+.mada-track-panel li {
+  position: relative;
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.8;
+  padding-inline-start: 22px;
+}
+
+.mada-track-panel li::before {
+  position: absolute;
+  inset-block-start: 0.72em;
+  inset-inline-start: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--track-color, var(--mada-teal));
+  content: '';
+}
+
+.mada-track-tool {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--track-color, var(--mada-teal)) 12%, var(--surface));
+  color: var(--track-color, var(--mada-teal));
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 6px 10px;
+}
+
+.mada-track-closing {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-block-start: 28px;
+  border: 1px solid color-mix(in srgb, var(--track-color, var(--mada-teal)) 20%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  padding: 18px;
+}
+
+.mada-track-closing strong {
+  display: block;
+  color: var(--text);
+  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+  font-weight: 900;
+}
+
+.mada-track-closing p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.8;
+}
+
 .mada-timeline {
   position: relative;
   --timeline-progress: 1;
@@ -562,6 +722,38 @@ details[open] .faq-answer {
 
   .mada-card {
     box-shadow: 0 14px 38px rgb(15 23 42 / 7%);
+  }
+
+  .mada-logo-mark {
+    width: 62px;
+    height: 48px;
+  }
+
+  .mada-logo-mark img {
+    transform: scale(1.68);
+  }
+
+  .mada-track-showcase {
+    padding: 18px;
+  }
+
+  .mada-track-showcase::before {
+    height: 82px;
+    inset-block-end: -44px;
+  }
+
+  .mada-track-panel {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .mada-track-closing {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mada-track-closing .mada-btn {
+    width: 100%;
   }
 
   .hero-float {

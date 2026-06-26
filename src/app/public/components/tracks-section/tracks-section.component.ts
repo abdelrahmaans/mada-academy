@@ -5,35 +5,105 @@ import { RevealOnScrollDirective } from '../../directives/reveal-on-scroll.direc
 import { SectionBlobComponent } from '../visual-system/section-blob.component';
 import { TrackIconVisualComponent } from '../visual-system/track-icon-visual.component';
 
+interface TrackShowcase {
+  color: string;
+  pathLabel: string;
+  toolsLabel: string;
+  promise: string;
+  learn: string[];
+  outcomes: string[];
+  system: string[];
+  closingTitle: string;
+  closingText: string;
+}
+
 @Component({
   selector: 'app-tracks-section',
   imports: [RevealOnScrollDirective, SectionBlobComponent, TrackIconVisualComponent],
   template: `
-    <section id="tracks" class="mada-section relative overflow-hidden bg-[color-mix(in_srgb,var(--mada-mint)_28%,transparent)]">
+    <section id="tracks" class="mada-section relative overflow-hidden bg-[color-mix(in_srgb,var(--mada-mint)_24%,transparent)]">
       <app-section-blob tone="amber" />
       <div class="mada-shell relative">
-        <div class="max-w-3xl" appRevealOnScroll>
-          <p class="mada-eyebrow">Learning tracks</p>
-          <h2 class="mt-4 text-4xl font-black">مسارات مناسبة لكل سن وطريقة تفكير</h2>
-          <p class="mada-lead mt-4">كل مسار له أدواته ومخرجاته، لكن الهدف ثابت: طفل يفكر ويصمم ويبني.</p>
+        <div class="mx-auto max-w-3xl text-center" appRevealOnScroll>
+          <p class="mada-eyebrow">المسارات</p>
+          <h2 class="mada-title">مسارات واضحة لكل عمر وطريقة تفكير</h2>
+          <p class="mada-lead mt-4">كل مسار معمول كرحلة منظمة: أدوات مناسبة، تطبيق عملي، ومخرجات يقدر الطفل يفتخر بيها.</p>
         </div>
-        <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5" appRevealOnScroll revealTarget="article" [revealStagger]="0.09">
+
+        <div class="mt-10 grid gap-6 lg:gap-8" appRevealOnScroll revealTarget="article" [revealStagger]="0.08">
           @for (track of tracks(); track track.slug) {
-            <article class="mada-card mada-card-interactive flex min-h-[390px] flex-col p-5" [style.--track-color]="trackVisual(track.slug).color">
-              <div class="flex items-start justify-between gap-3">
-                <app-track-icon-visual [slug]="track.slug" [alt]="track.title + ' visual'" />
-                <span class="w-max rounded-full bg-[var(--mada-navy)] px-3 py-1 text-sm font-black text-white">{{ track.age }} سنة</span>
+            @let meta = trackMeta(track.slug);
+            <article class="mada-track-showcase" [style.--track-color]="meta.color">
+              <div class="mada-track-progress" aria-hidden="true"><span></span></div>
+              <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div class="relative min-w-0">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <span class="mada-track-pill">{{ meta.pathLabel }}</span>
+                    <span class="mada-track-category">المسارات</span>
+                  </div>
+                  <div class="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center">
+                    <app-track-icon-visual [slug]="track.slug" [alt]="track.title + ' visual'" />
+                    <div class="min-w-0">
+                      <h3 class="text-4xl font-black leading-tight text-[var(--track-color)] md:text-5xl">{{ track.title }}</h3>
+                      <p class="mt-2 text-xl font-black text-[var(--text)]">{{ track.age }} سنوات</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-lg font-black shadow-sm">
+                    <span>{{ meta.toolsLabel }}</span>
+                    @for (tool of track.tools; track tool) {
+                      <span class="rounded-full bg-[color-mix(in_srgb,var(--track-color)_12%,var(--surface))] px-3 py-1 text-sm text-[var(--track-color)]">{{ tool }}</span>
+                    }
+                  </div>
+
+                  <p class="mt-5 max-w-xl text-2xl font-black leading-relaxed text-[var(--mada-navy)] dark:text-white">{{ meta.promise }}</p>
+                  <p class="mt-3 max-w-xl leading-8 text-[var(--muted)]">{{ track.description }}</p>
+                </div>
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div class="mada-track-panel">
+                    <h4>ماذا سيتعلم طفلك؟</h4>
+                    <ul>
+                      @for (item of meta.learn; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </div>
+                  <div class="mada-track-panel">
+                    <h4>الأدوات المستخدمة</h4>
+                    <p>{{ track.focus }}</p>
+                    <div class="mt-4 flex flex-wrap justify-center gap-2">
+                      @for (tool of track.tools; track tool) {
+                        <span class="mada-track-tool">{{ tool }}</span>
+                      }
+                    </div>
+                  </div>
+                  <div class="mada-track-panel">
+                    <h4>مخرجات المسار</h4>
+                    <ul>
+                      @for (item of meta.outcomes; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </div>
+                  <div class="mada-track-panel">
+                    <h4>نظام التعلم</h4>
+                    <ul>
+                      @for (item of meta.system; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <h3 class="mt-4 text-2xl font-black">{{ track.title }}</h3>
-              <p class="mt-2 text-sm font-bold text-[var(--track-color)]">{{ track.focus }}</p>
-              <p class="mt-3 leading-7 text-[var(--muted)]">{{ track.description }}</p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                @for (tool of track.tools; track tool) {
-                  <span class="rounded-full bg-[color-mix(in_srgb,var(--track-color)_14%,var(--surface))] px-3 py-1 text-xs font-black text-[var(--track-color)]">{{ tool }}</span>
-                }
+
+              <div class="mada-track-closing">
+                <div>
+                  <strong>{{ meta.closingTitle }}</strong>
+                  <p>{{ meta.closingText }}</p>
+                </div>
+                <button class="mada-btn mada-btn-primary" type="button" (click)="openLead.emit({ sourcePage: 'home', sourceSection: 'tracks', reason: 'start_track', selectedTrack: track.slug })">ابدأ هذا المسار</button>
               </div>
-              <p class="mt-auto pt-4 text-sm font-black">المخرج: {{ track.outcome }}</p>
-              <button class="mada-btn mada-btn-primary mt-4 w-full" type="button" (click)="openLead.emit({ sourcePage: 'home', sourceSection: 'tracks', reason: 'start_track', selectedTrack: track.slug })">ابدأ هذا المسار</button>
             </article>
           }
         </div>
@@ -46,27 +116,79 @@ export class TracksSectionComponent {
   readonly tracks = input.required<Track[]>();
   readonly openLead = output<LeadModalConfig>();
 
-  trackVisual(slug: string): { color: string } {
-    if (slug.includes('tiny')) {
-      return { color: '#0d9488' };
-    }
+  private readonly fallbackMeta: TrackShowcase = {
+    color: '#0d9488',
+    pathLabel: 'مسار مناسب',
+    toolsLabel: 'تعلم عملي',
+    promise: 'نحوّل الفضول إلى مشروع واضح.',
+    learn: ['تفكير منطقي', 'حل مشكلات', 'تطبيق عملي', 'ثقة في العرض'],
+    outcomes: ['مشروع قابل للعرض', 'فهم أساسيات البرمجة', 'ملف أعمال بسيط'],
+    system: ['مشاريع عملية', 'أنشطة تفاعلية', 'متابعة فردية', 'بيئة آمنة ومحفزة'],
+    closingTitle: 'ابدأ الرحلة المناسبة',
+    closingText: 'نختار المسار حسب عمر الطفل ومستواه.'
+  };
 
-    if (slug.includes('explore')) {
-      return { color: '#0d9488' };
+  private readonly metaBySlug: Record<string, TrackShowcase> = {
+    tiny: {
+      color: '#4d8f37',
+      pathLabel: 'المسار الأول',
+      toolsLabel: 'Scratch + تفكير منطقي',
+      promise: 'الخطوة الأولى في رحلة طفلك.',
+      learn: ['التفكير المنطقي وحل المشكلات', 'أساسيات البرمجة بطريقة مرئية', 'تصميم ألعاب وقصص تفاعلية', 'تنمية الإبداع والثقة بالنفس'],
+      outcomes: ['ألعاب ومشاريع خاصة به', 'فهم أساسيات البرمجة', 'ثقة في استخدام الكمبيوتر', 'استعداد للمسار التالي'],
+      system: ['مشاريع عملية', 'أنشطة تفاعلية', 'متابعة فردية', 'بيئة آمنة ومحفزة'],
+      closingTitle: 'جاهز يبدأ رحلته؟',
+      closingText: 'المستقبل يبدأ بخطوة صغيرة اليوم.'
+    },
+    explore: {
+      color: '#0967c6',
+      pathLabel: 'المسار الثاني',
+      toolsLabel: 'Scratch + AI + مشاريع',
+      promise: 'نحوّل الفضول إلى ابتكار.',
+      learn: ['تصميم ألعاب تفاعلية بسكراتش', 'مقدمة في الذكاء الاصطناعي', 'حل المشكلات بطريقة ممتعة', 'تحويل الأفكار لمشاريع حقيقية'],
+      outcomes: ['ألعاب ومشاريع تفاعلية', 'عروض تقديمية لمشاريعه', 'شهادة إنجاز في نهاية المرحلة', 'Portfolio خاص به'],
+      system: ['مشاريع عملية', 'أنشطة تفاعلية', 'تعلم بالممارسة', 'متابعة فردية'],
+      closingTitle: 'في هذه المرحلة',
+      closingText: 'نزرع الشغف، ونبني الثقة، ونطلق الإبداع.'
+    },
+    build: {
+      color: '#6d35b8',
+      pathLabel: 'المسار الثالث',
+      toolsLabel: 'Python + Algorithms + GitHub',
+      promise: 'تبني المبرمج الحقيقي ونحوّل الأفكار إلى مشاريع قوية.',
+      learn: ['أساسيات Python بشكل قوي', 'الخوارزميات وحل المشكلات', 'هيكل البيانات والمنطق البرمجي', 'استخدام Git و GitHub', 'بناء مشاريع حقيقية من الصفر'],
+      outcomes: ['مشاريع برمجية متكاملة', 'رفع المشاريع على GitHub', 'فهم عميق للخوارزميات', 'ملف أعمال قوي', 'جاهزية لمستوى احترافي'],
+      system: ['مشاريع عملية', 'أنشطة تفاعلية', 'تحديات برمجية', 'متابعة فردية'],
+      closingTitle: 'من هنا يبدأ طريق الاحتراف!',
+      closingText: 'مهارات اليوم هي مستقبل الغد.'
+    },
+    code: {
+      color: '#dc2626',
+      pathLabel: 'المسار الرابع',
+      toolsLabel: 'Advanced Python + تخصص',
+      promise: 'تخصص أعمق، مهارات احترافية، ومستقبل أقوى.',
+      learn: ['إتقان Python بمستوى متقدم', 'هياكل بيانات وخوارزميات متقدمة', 'البرمجة كائنية التوجه OOP', 'مشاريع برمجية احترافية', 'تحضير للمسابقات والبرمجة التنافسية'],
+      outcomes: ['بناء مشاريع برمجية متكاملة', 'حل مسائل معقدة بكفاءة', 'المشاركة في مسابقات برمجية', 'Portfolio احترافي قوي', 'جاهزية للتخصصات التقنية'],
+      system: ['مشاريع عملية', 'أنشطة تفاعلية', 'جلسات كود ومراجعة', 'متابعة فردية', 'بيئة آمنة ومحفزة'],
+      closingTitle: 'ابدأ التخصص وكن مبرمج المستقبل!',
+      closingText: 'من الشغف إلى الاحتراف مع Mada Code.'
+    },
+    web: {
+      color: '#f97316',
+      pathLabel: 'المسار الخامس',
+      toolsLabel: 'HTML → React → Full Stack',
+      promise: 'من أول سطر كود لحد بناء تطبيقات متكاملة.',
+      learn: ['بناء صفحات ويب احترافية', 'تصميم واجهات تفاعلية', 'برمجة باستخدام JavaScript', 'بناء تطبيقات React', 'تطوير مشاريع Full Stack متكاملة'],
+      outcomes: ['مشاريع ويب متكاملة جاهزة للعرض', 'فهم عميق لتقنيات الويب الحديثة', 'بناء تطبيقات تفاعلية وسريعة', 'رفع المشاريع على الإنترنت', 'جاهزية للمنافسات وسوق العمل'],
+      system: ['مشاريع عملية', 'أنشطة تفاعلية', 'جلسات كود ومراجعة', 'متابعة فردية', 'بيئة آمنة ومحفزة'],
+      closingTitle: 'مستقبلك في البرمجة يبدأ من هنا!',
+      closingText: 'اصنع موقعك، وابنِ أفكارك، وأطلق مشروعك للعالم.'
     }
+  };
 
-    if (slug.includes('build')) {
-      return { color: '#0f172a' };
-    }
-
-    if (slug.includes('code')) {
-      return { color: '#111827' };
-    }
-
-    if (slug.includes('web')) {
-      return { color: '#f59e0b' };
-    }
-
-    return { color: '#0d9488' };
+  trackMeta(slug: string): TrackShowcase {
+    const normalizedSlug = slug.toLowerCase();
+    const key = Object.keys(this.metaBySlug).find((name) => normalizedSlug.includes(name));
+    return key ? this.metaBySlug[key] : this.fallbackMeta;
   }
 }

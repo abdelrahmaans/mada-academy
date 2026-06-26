@@ -8,8 +8,8 @@ import { ContentService } from '../../../core/services/content.service';
   selector: 'app-public-header',
   imports: [NgOptimizedImage, RouterLink, LucideMenu, LucideMoon, LucideRocket, LucideSun, LucideX],
   template: `
-    <header class="sticky top-0 z-40 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_90%,transparent)] backdrop-blur-xl">
-      <div class="mada-shell flex min-h-16 items-center justify-between gap-3">
+    <header class="sticky top-0 z-40 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] backdrop-blur-xl">
+      <div class="mada-shell flex min-h-20 items-center justify-between gap-3 py-2">
         <a routerLink="/" class="flex min-w-0 items-center gap-3 text-inherit no-underline" aria-label="Mada Academy home" (click)="closeMenu()">
           <span class="mada-logo-mark shrink-0" aria-hidden="true">
             <img [ngSrc]="logoMarkSrc()" alt="" width="96" height="96" priority />
