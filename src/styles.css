@@ -512,19 +512,149 @@ details[open] .faq-answer {
   transform: translateY(-3px);
 }
 
-.mada-track-progress {
+.mada-track-story-bars {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
   margin-block-end: 24px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--line) 72%, transparent);
-  height: 9px;
 }
 
-.mada-track-progress span {
-  border-radius: inherit;
+.mada-track-story-bars span {
+  display: block;
+  height: 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 72%, transparent);
+}
+
+.mada-track-story-bars span.is-past {
+  background: color-mix(in srgb, var(--track-color, var(--mada-teal)) 28%, var(--line));
+}
+
+.mada-track-story-bars span.is-active {
   background: var(--track-color, var(--mada-teal));
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--track-color, var(--mada-teal)) 26%, transparent);
+}
+
+.mada-track-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(24px, 4vw, 44px);
+  align-items: center;
+}
+
+.mada-track-art {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--track-color, var(--mada-teal)) 18%, var(--line));
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 34%, color-mix(in srgb, var(--track-color, var(--mada-teal)) 16%, transparent), transparent 15rem),
+    linear-gradient(160deg, color-mix(in srgb, var(--track-color, var(--mada-teal)) 10%, var(--surface)), var(--surface));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 42%);
+}
+
+.mada-track-art::before,
+.mada-track-art::after {
+  position: absolute;
+  border: 1px dashed color-mix(in srgb, var(--track-color, var(--mada-teal)) 30%, transparent);
+  border-radius: 999px;
+  content: '';
+}
+
+.mada-track-art::before {
+  width: 320px;
+  height: 320px;
+  inset-block-start: 34px;
+  inset-inline-end: 38px;
+}
+
+.mada-track-art::after {
+  width: 180px;
+  height: 180px;
+  inset-block-end: -42px;
+  inset-inline-start: -34px;
+}
+
+.mada-track-art-orb {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  inset-block-start: 34px;
+  inset-inline-end: 50px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--track-color, var(--mada-teal)) 12%, white);
+}
+
+.mada-track-main-icon {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: 72px;
+  inset-inline-end: 92px;
+  transform: scale(1.8);
+}
+
+.mada-track-code-card {
+  position: absolute;
+  z-index: 3;
+  inset-block-end: 48px;
+  inset-inline-start: 34px;
+  width: min(280px, calc(100% - 68px));
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  background: #0f172a;
+  box-shadow: 0 26px 70px rgb(2 6 23 / 24%);
+  color: white;
+  font-family: Inter, ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 18px;
+}
+
+.mada-track-code-card span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--track-color, var(--mada-teal));
+}
+
+.mada-track-code-card span:nth-child(2) {
+  background: var(--mada-amber);
+}
+
+.mada-track-code-card span:nth-child(3) {
+  background: #22c55e;
+}
+
+.mada-track-code-card strong {
+  display: block;
+  margin-block: 16px 10px;
+  color: #ccfbf1;
+  font-size: 1rem;
+}
+
+.mada-track-code-card p {
+  margin: 6px 0 0;
+  color: #dbeafe;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.mada-track-floating-badge {
+  position: absolute;
+  z-index: 4;
+  inset-block-start: 38px;
+  inset-inline-start: 30px;
+  border: 1px solid color-mix(in srgb, var(--track-color, var(--mada-teal)) 28%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--track-color, var(--mada-teal)) 16%, transparent);
+  color: var(--track-color, var(--mada-teal));
+  font-size: 0.9rem;
+  font-weight: 900;
+  padding: 12px 14px;
+  backdrop-filter: blur(10px);
 }
 
 .mada-track-pill,
@@ -558,6 +688,14 @@ details[open] .faq-answer {
   min-height: 210px;
   padding: 20px;
   text-align: center;
+}
+
+.mada-track-panels-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 16px;
+  margin-block-start: 28px;
 }
 
 .mada-track-panel h4 {
@@ -747,6 +885,32 @@ details[open] .faq-answer {
     padding: 18px;
   }
 
+  .mada-track-art {
+    min-height: 300px;
+  }
+
+  .mada-track-art-orb {
+    width: 180px;
+    height: 180px;
+    inset-inline-end: 24px;
+  }
+
+  .mada-track-main-icon {
+    inset-inline-end: 58px;
+    transform: scale(1.45);
+  }
+
+  .mada-track-code-card {
+    inset-block-end: 28px;
+    inset-inline-start: 18px;
+    width: min(250px, calc(100% - 36px));
+  }
+
+  .mada-track-floating-badge {
+    inset-block-start: 22px;
+    inset-inline-start: 18px;
+  }
+
   .mada-track-closing {
     align-items: stretch;
     flex-direction: column;
@@ -816,5 +980,15 @@ details[open] .faq-answer {
 
   .mada-grid-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mada-track-panels-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .mada-track-hero-grid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
   }
 }
